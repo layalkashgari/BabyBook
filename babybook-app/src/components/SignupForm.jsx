@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Input from "./common/Input";
 class Signup extends Component {
   constructor() {
     super();

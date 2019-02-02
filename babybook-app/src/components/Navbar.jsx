@@ -1,44 +1,61 @@
 import React, { Component } from 'react';
 import Signup from './SignupForm';
-import Signin from './Signin'; 
+import AllBooks from './AllBooks';
+import Landing from './Landing';
+// import Signin from './Signin'; 
 
 
-class Nav extends Component {
+class Navbar extends Component {
   constructor(){
     super()
     this.state = {
-      auth: false
+      auth: false,
+      showAll: false,
+
     }
   }
-  // toggleSignin() {
-  //   const signedin = !this.state.auth;
-  //   this.setState({auth: signedin})
+  toggleSignin() {
+    console.log( 'sgin in button clicked')
+    // const signedin = !this.state.auth;
+    this.setState({auth: !this.state.auth})
 
-  // }
+  }
+
+
 
   render() {
     return (
       <div>
         <h1>Baby Book</h1>
 
-        <Signup/> 
-        
-        <button onClick={this.state.Signup}> sign up </button>
-      <Signin 
+        <button onClick={this.props.goLanding}> Home Page </button>
+        <button onClick={this.props.handleSignup}> sign up </button>
+      {/* <Signin 
       
-      />
+      /> */}
      
-        {/* <button id="favorite-btn" 
-          className={this.state.auth ? 'sign in' : 'sign out'} 
+        <button 
+        
           onClick={() => this. toggleSignin()}
         > 
           {this.state.auth ? 'sign out' : 'sign in'}
-        </button> */}
+
+         
+        </button>
+
+
+
+        <button onClick={this.props.showBooks}>Album Books</button>
+        {this.state.showAll ? <AllBooks/> : ''}
 
       
-      </div>
+      
+
+
+        </div>
+
     );
   }
 }
 
-export default Nav;
+export default Navbar;
