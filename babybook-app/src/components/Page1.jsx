@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Book from "./Book"; 
+// import Book from "./Book"; 
 
 
 
@@ -15,15 +15,15 @@ class Page1 extends Component {
 handleInput(text) {
     const input = text.target.value;
     this.setState({
-      input
+      input: input
     });
     console.log(text.target.value);
   }
   // takes the data from input and save it to database 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.handleSubmit(this.state.input);
-  };
+  // handleSave(event) {
+  //   event.preventDefault();
+  //   this.props.handleSaveButton(this.state.input);
+  // };
 
   
 
@@ -33,14 +33,17 @@ handleInput(text) {
 <div className="Page1">
 
 <div> <h1> this is the first page </h1></div>
-<form onSubmit={this.handleSubmit.bind(this)}>
-      <div className="UserInput">
-      You were born at <input type="text" name="city" onChange={this.handleInput.bind(this)}/>
-      You were <input type="text" name="number" onChange={this.handleInput.bind(this)}/> inches 
 
 
-      <button onSubmit={this.handleSubmit.bind(this)}>save</button>
-</div> 
+
+<form  className="UserInput" onSubmit={this.props.handleSaveButton}>
+    
+ Hello Mum and Dad 
+ 
+<input type="text" name="city" onChange={this.handleInput.bind(this)}/>
+
+      <button>save</button>
+
 </form>
 
 

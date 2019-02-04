@@ -27,10 +27,10 @@ handleInput(text) {
 
 <div className="Page2"> 
 
-<h1> This is the second page </h1>
+<h1>Who am I? </h1>
 <div className="UserInput">
-      Your Sister picked your name because <input type="text" name="city" onChange={this.handleInput.bind(this)}/>
-      and it was  <input type="text" name="city" onChange={this.handleInput.bind(this)}/> inches 
+     <p> My name is <input type="text" name="city" onChange={this.handleInput.bind(this)}/>
+     Chose it for me :  <input type="text" name="city" onChange={this.handleInput.bind(this)}/> inches </p> 
 </div> 
 
       <button>save</button>

@@ -8,10 +8,12 @@ class Book extends Component {
   constructor() {
     super()
     this.state = {
-      pageNum: 'Page1'
+      pageNum: '1'
 
     }
   }
+
+  // 
 
   // handleSaveButton(show) {
   //   /* 
@@ -50,35 +52,46 @@ class Book extends Component {
 
 
   // to go to the secnd page when clicked on next button here 
-  handlePage2() {
-    console.log('go to page two')
+  // handleNext() {
+  //   console.log('go to the next page')
+  //   this.setState({
+  //     pageNum: this.state.pageNum + 1
+
+
+  //   })
+
+  // }
+
+
+
+
+  handlePage3() {
+    console.log('go to page three')
     this.setState({
-      pageNum: 'Page2'
-    
-
+      pageNum: '3'
     })
-
   }
-
- 
-
-
-handlePage3(){ 
-  console.log('go to page three')
-  this.setState({ 
-pageNum: '3'
-  })
-}
 
   handlePage1() {
     console.log('go to page one')
     this.setState({
-      pageNum: 'Page1'
+      pageNum: '1'
 
     })
 
 
   }
+
+  handlePage2() {
+    console.log('go to page two')
+    this.setState({
+      pageNum: '2'
+
+    })
+
+
+  }
+
 
   // handleNextButton2 (){ 
   //   console.log('go to page three')
@@ -93,7 +106,7 @@ pageNum: '3'
 
   render() {
     return (
-      <div className="Book">
+      <div className="book">
         <h1> Enjoy Creating Your Book - Book component
 
         </h1>
@@ -101,10 +114,10 @@ pageNum: '3'
 
 
         <div className="nextbutton">
-       
-        {this.state.pageNum == 'Page1' ? <Page1 /> : ''}
-        {this.state.pageNum == 'Page2' ? <Page2 /> : ''}
-{this.state.pageNum == '3' ? <Page3/> : '' } 
+
+          {this.state.pageNum == '1' ? <Page1 /> : ''}
+          {this.state.pageNum == '2' ? <Page2 /> : ''}
+          {this.state.pageNum == '3' ? <Page3 /> : ''}
           {/* {this.state.nextbtn == 'Page2' ? <Page2 handleNextButton={this.handleNextButton.bind(this)} /> : ''}
           {this.state.nextbtn == 'Page3' ? <Page3 handleNextButton={this.handleNextButton.bind(this)}/> : ''}
            */}

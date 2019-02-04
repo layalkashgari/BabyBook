@@ -27,8 +27,8 @@ handleInput(text) {
 
 <h1> This is the third page page </h1>
 <div className="UserInput">
-      Lorem ipsum dolor sit amet  <input type="text" name="city" onChange={this.handleInput.bind(this)}/>
-      consectetur agnam reprehenderit, laboriosam quibusdam sint totam consequuntur harum veritatis.  <input type="text" name="city" onChange={this.handleInput.bind(this)}/> inches 
+     <p>  Lorem ipsum dolor sit amet  <input type="text" name="city" onChange={this.handleInput.bind(this)}/>
+      consectetur agnam reprehenderit, laboriosam quibusdam sint totam consequuntur harum veritatis.  <input type="text" name="city" onChange={this.handleInput.bind(this)}/> inches </p>
 </div> 
 
       <button onChange={this.handleInput.bind(this)}>save</button>

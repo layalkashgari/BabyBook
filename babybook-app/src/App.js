@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navbar from "./components/Navbar.jsx";
-import SignupForm from "./components/SignupForm";
-import Signin from './components/Signin';
+// import SignupForm from "./components/Signup";
+// import Signin from './components/Login';
 import Landing from './components/Landing';
 import Book from './components/Book';
-import Page1 from './components/Page1';
-import Page2 from './components/Page2';
+// import Page1 from './components/Page1';
+// import Page2 from './components/Page2';
+import AllBooks from './components/AllBooks'
+import { getUser, logout } from "./services/authService";
+import AuthForm from "./components/AuthForm";
+import Profile from "./components/Profile";
+// import Login from "./components/Login";
 
 class App extends Component {
   constructor() {
@@ -17,24 +22,85 @@ class App extends Component {
       showBook: false,
       bookData: [],
       nextbtn: 'page1',
-      home: false, // to go to the landing page if its true 
-      showAll: false
-
+      // home: true, // to go to the landing page if its true 
+      books: false,
+      user: null,
+      form: 'home',
+      // name: '',
+      // email: '', 
+      // password: ''
     }
   }
+// ghadeer's auth 
+  checkForUser() {
+    const user = getUser();
+    if (user) {
+      this.setState({ user });
+    }
+  }
+  componentDidMount() {
+    this.checkForUser();
+  }
+ // to change the sign in and singup forms 
 
-  goLanding() {
+  
+  changeForm = type => {
+    console.log(type);
+
+    this.setState({
+      form: type,
+      home: false,
+      showBook: false 
+    });
+  };
+
+  changeComponenet = type => {
+    console.log(type);
+
+    this.setState({
+      form: type,
+      
+    });
+  };
+
+ 
+  login = () => {
+    const user = getUser();
+    console.log('iii', user)
+    this.setState({ user });
+  };
+
+  logout = () => {
+    logout();
+    this.setState({ user: null });
+  };
+
+
+
+  // whena book created - create all pages needed 
+
+  // 
+
+  // create a page 
+
+  goLanding = () =>{
     console.log('go to the homepage')
     this.setState({
       home: !this.state.active,
+      showBook: false,
+      books: false
     })
   }
 
-
-  showBooks() {
-    console.log('show all books for this user ')
-    this.setState({ showAll: !this.state.showAll })
+  showAllBooks() {
+    console.log('show me all my books')
+    this.setState({
+      books: !this.state.books,
+      home: false,
+      showBook: false
+    })
   }
+
 
 
 
@@ -50,10 +116,7 @@ class App extends Component {
   // when clicked on signup setCurrentShow(signup)
   // if active show is "signup" render singup form 
 
-  handleSignup() {
-    this.setState({ activeShow: 'signup' })
-    console.log('signup')
-  }
+ 
 
   // handleSignin() { 
   //   this.setState({signedin: true})
@@ -65,54 +128,97 @@ class App extends Component {
   handleCreateButton() {
     console.log(" clicked on create your own book - go to the book component");
     this.setState({
-      showBook: !this.state.showBook
+      showBook: !this.state.showBook,
+      home: !this.state.home,
+      form: ''
     })
-
-  }
-
-  handleSubmit(data) {
-    this.setState({
-      bookData: data
-    });
-
-    this.handleSaveButton(this.state.bookData);
-  }
-
-  handleSaveButton(book) {
-    /* 
-      posts data to the database, the database
-      sends that same data back.
-      add that data to the 'bookData' state
-    */
-    console.log(book)
+    // fetch to create a new book for the user 
     const url = 'http://localhost:3000/books'
     fetch(url, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(book)
+      }
+      //  body: JSON.stringify(show) this is removed because i dont want to send anything - and the parameter is also deleted because im not sendind any data e.x. book name 
+
     })
       .then(response => response.json())
       .then(data => {
+        console.log('DATA')
         console.log(data);
+        const bookData = this.state.bookData.concat([data]);
+        this.setState({
+          bookData: bookData
+
+        })
       })
       .catch(error => {
         console.log(error);
       })
+
   }
+
+  handleSaveButton(data) {
+    console.log('save button clicked')
+    this.setState({
+      bookData: data
+    });
+
+    this.handleSaveButton(this.state.bookData); // what does this doo ? 
+  }
+
+
+// to save the text and image
+  // handleSaveButton(text, image) {
+    /* 
+      posts data to the database, the database
+      sends that same data back.
+      add that data to the 'bookData' state
+    */
+  //   console.log(book)
+  //   const url = 'http://localhost:3000/books'
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(book)
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     })
+  // }
 
   // fetch data and for the sign up button
-  createUser(user) {
-    const url = "http://localhost:3000/users"
-    fetch(url, {
-      method: 'POST',
+  // createUser(user) {
+  //   const userData = {
+  //     "user" : {
+  //       "name" : this.state.name,
+  //       "email": this.state.email, 
+  //       "password":this.state.password
+  //     }
+  //   }
+  //   const url = "http://localhost:3000/users"
+  //   fetch(url, {
+  //     method: 'POST',
+  //     mode: "cors", // no-cors, cors, *same-origin
+  //       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  //       credentials: "same-origin", // include, *same-origin, omit
+  //       headers: {
+  //           "Content-Type": "application/json",
+  //           // "Content-Type": "application/x-www-form-urlencoded",
+  //       },
+  //       redirect: "follow", // manual, *follow, error
+  //       referrer: "no-referrer", // no-referrer, *client
+  //       body: JSON.stringify(data), // body data type must match "Content-Type" header
+  //   })
+  //   .then(response => response.json()); // parses response to JSON   
+  // }
 
-    }
-
-
-    )
-  }
   handleNextButton() {
     console.log('go to the next page')
     this.setState({
@@ -120,27 +226,51 @@ class App extends Component {
     })
   }
 
-  // handleNextButton() {
-  //   console.log('go to the next page')
-  //   this.setState({ nextbtn: !this.state.nextbtn })
-
-  // }
-
-
-
-
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <header className="App-header">
         </header>
-        
-        <Navbar goLanding={this.goLanding.bind(this)}/> 
+        <Navbar
+          user={this.state.user}
+          changeForm={this.changeForm}
+          changeComponenet={this.changeComponenet}
+          logout={this.logout}
+          showAllBooks={this.showAllBooks}
+          goLanding={this.goLanding} />
+{/* Ghadeers */}
 
-        {this.state.home ? <Landing/> : false }
+        <div className="container">
+          {this.state.user ? (
+            <Profile user={this.state.user} />
+          ) : (
+           ''
+          )}
 
-        {this.state.showBook ? <Book handleNextButton={this.handleNextButton.bind(this)} /> : <Landing handleCreateButton={this.handleCreateButton.bind(this)} />}
+           {/* {this.state.user ? (
+            <Profile user={this.state.user} />
+          ) : (
+           ''
+          )} */}
+
+          {this.state.form === 'signup' ?  <AuthForm form={this.state.form} onLogin={this.login} /> : false}
+          {this.state.form === 'login' ?  <AuthForm form={this.state.form} onLogin={this.login}/>: ''}
+
+        </div>
+
+{this.state.form === 'home'? <Landing  handleCreateButton={this.handleCreateButton.bind(this)}/> : ''}
+
+        {this.state.form === 'AlbumBooks' ? <AllBooks /> : false}
+
+        {/* {this.state.home ? <Landing handleCreateButton={this.handleCreateButton.bind(this)} /> : false} */}
+
+
+
+        {this.state.showBook ? <Book handleNextButton={this.handleNextButton.bind(this)} /> : false}
+
+
+
       </div>
     );
   }
