@@ -8,7 +8,8 @@ class Page2 extends Component {
     super()
     this.state = {
       click: false,
-      input: ''
+      babyName: '',
+      choseit: ''
     }
   }
 

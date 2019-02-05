@@ -8,10 +8,16 @@ import Book from './components/Book';
 // import Page1 from './components/Page1';
 // import Page2 from './components/Page2';
 import AllBooks from './components/AllBooks'
-import { getUser, logout } from "./services/authService";
+import { getUser, logout, getToken } from "./services/authService";
 import AuthForm from "./components/AuthForm";
 import Profile from "./components/Profile";
+import { setToken, setUser } from "./services/authService";
+
 // import Login from "./components/Login";
+
+// things i wanna do: if the user is not authintaced dont show "album book" in the navbar. if the user isauthinitaced 
+// if error 401 show passowrd is wrong 
+//if user is not authinticated say if its authinticaed show <landing/> 
 
 class App extends Component {
   constructor() {
@@ -31,26 +37,35 @@ class App extends Component {
       // password: ''
     }
   }
-// ghadeer's auth 
+  // ghadeer's auth 
   checkForUser() {
     const user = getUser();
     if (user) {
       this.setState({ user });
     }
   }
+
+  checkToken(){ 
+    const token = getToken(); 
+    if (token) { 
+      this.setState({ token })
+    }
+  } 
+
   componentDidMount() {
     this.checkForUser();
+    this.checkToken(); 
   }
- // to change the sign in and singup forms 
+  // to change the sign in and singup forms 
 
-  
+
   changeForm = type => {
     console.log(type);
 
     this.setState({
       form: type,
       home: false,
-      showBook: false 
+      showBook: false
     });
   };
 
@@ -59,15 +74,22 @@ class App extends Component {
 
     this.setState({
       form: type,
-      
+
     });
   };
 
- 
+
   login = () => {
+
+    // set a state to chane the active page 
     const user = getUser();
     console.log('iii', user)
-    this.setState({ user });
+    this.setState({
+      user,
+      form: 'home'
+    });
+
+
   };
 
   logout = () => {
@@ -83,7 +105,7 @@ class App extends Component {
 
   // create a page 
 
-  goLanding = () =>{
+  goLanding = () => {
     console.log('go to the homepage')
     this.setState({
       home: !this.state.active,
@@ -116,7 +138,7 @@ class App extends Component {
   // when clicked on signup setCurrentShow(signup)
   // if active show is "signup" render singup form 
 
- 
+
 
   // handleSignin() { 
   //   this.setState({signedin: true})
@@ -126,6 +148,13 @@ class App extends Component {
 
   // to render the book page - change the state to true 
   handleCreateButton() {
+    console.log('auth token ', localStorage.getItem('authToken'));
+    let userId = getUser().id
+    let userToken = getToken().auth_token
+    console.log('auth token ', localStorage.getItem('authToken'));
+    console.log('user token', getToken());
+
+    console.log("this the user id that I want to be linked with the book ", userId , "and token is" , userToken )
     console.log(" clicked on create your own book - go to the book component");
     this.setState({
       showBook: !this.state.showBook,
@@ -133,12 +162,13 @@ class App extends Component {
       form: ''
     })
     // fetch to create a new book for the user 
-    const url = 'http://localhost:3000/books'
+    const url = `http://localhost:3000/books`
     fetch(url, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
-      }
+      },
+      body: JSON.stringify({ user_id: userId, name: "this is a test from the client book", auth_token: getToken() })
       //  body: JSON.stringify(show) this is removed because i dont want to send anything - and the parameter is also deleted because im not sendind any data e.x. book name 
 
     })
@@ -149,7 +179,6 @@ class App extends Component {
         const bookData = this.state.bookData.concat([data]);
         this.setState({
           bookData: bookData
-
         })
       })
       .catch(error => {
@@ -158,23 +187,23 @@ class App extends Component {
 
   }
 
-  handleSaveButton(data) {
-    console.log('save button clicked')
-    this.setState({
-      bookData: data
-    });
+  // handleSaveButton(data) {
+  //   console.log('save button clicked')
+  //   this.setState({
+  //     bookData: data
+  //   });
 
-    this.handleSaveButton(this.state.bookData); // what does this doo ? 
-  }
+  //   // this.handleSaveButton(this.state.bookData); // what does this doo ? 
+  // }
 
 
-// to save the text and image
+  // to save the text and image
   // handleSaveButton(text, image) {
-    /* 
-      posts data to the database, the database
-      sends that same data back.
-      add that data to the 'bookData' state
-    */
+  /* 
+    posts data to the database, the database
+    sends that same data back.
+    add that data to the 'bookData' state
+  */
   //   console.log(book)
   //   const url = 'http://localhost:3000/books'
   //   fetch(url, {
@@ -239,27 +268,27 @@ class App extends Component {
           logout={this.logout}
           showAllBooks={this.showAllBooks}
           goLanding={this.goLanding} />
-{/* Ghadeers */}
+        {/* Ghadeers */}
 
         <div className="container">
           {this.state.user ? (
             <Profile user={this.state.user} />
           ) : (
-           ''
-          )}
+              ''
+            )}
 
-           {/* {this.state.user ? (
+          {/* {this.state.user ? (
             <Profile user={this.state.user} />
           ) : (
            ''
           )} */}
 
-          {this.state.form === 'signup' ?  <AuthForm form={this.state.form} onLogin={this.login} /> : false}
-          {this.state.form === 'login' ?  <AuthForm form={this.state.form} onLogin={this.login}/>: ''}
+          {this.state.form === 'signup' ? <AuthForm form={this.state.form} onLogin={this.login} /> : false}
+          {this.state.form === 'login' ? <AuthForm form={this.state.form} onLogin={this.login} /> : ''}
 
         </div>
 
-{this.state.form === 'home'? <Landing  handleCreateButton={this.handleCreateButton.bind(this)}/> : ''}
+        {this.state.form === 'home' ? <Landing handleCreateButton={this.handleCreateButton.bind(this)} /> : ''}
 
         {this.state.form === 'AlbumBooks' ? <AllBooks /> : false}
 
@@ -269,8 +298,7 @@ class App extends Component {
 
         {this.state.showBook ? <Book handleNextButton={this.handleNextButton.bind(this)} /> : false}
 
-
-
+        {/* {chech for active page then render the landing page } */}
       </div>
     );
   }

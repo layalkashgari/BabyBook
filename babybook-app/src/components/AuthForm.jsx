@@ -21,7 +21,7 @@ class AuthForm extends Component {
   }
 
   handleRequest(user) {
-  console.log("\n\n\n\n\n\n" , "fetching data " , user)
+  console.log("\n\n\n\n\n\n" , "fetching data" , user)
     let apiUrl = "http://localhost:3000";
 
     apiUrl += this.props.form === "signup" ? "/users" : "/login";
@@ -40,7 +40,7 @@ class AuthForm extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        console.log('&&&&&&', data);
         setToken(data.auth_token);
         setUser(JSON.stringify(data)) // why not  setUser(data.name)
         this.props.onLogin();

@@ -15,7 +15,7 @@ export function getToken() {
 
 export function getUser(){
  return JSON.parse(localStorage.getItem(userKey))
-} // turki 
+} 
 
 export function logout() {
  localStorage.removeItem(tokenKey);

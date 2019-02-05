@@ -8,6 +8,7 @@ const Login = props => {
         {props.renderInput("email", "Email")}
         {props.renderInput("password", "Password", "password")}
         <button className="btn btn-primary"> Login </button>
+
       </form>
     </div>
   );

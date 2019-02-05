@@ -47,7 +47,9 @@ const Navbar = ({ user, changeForm, logout, goLanding, showAllBooks }) => {
         {this.state.showAll ? <AllBooks/> : ''} */}
 
       {/* </div> */}
-       <ul className="navbar-nav">
+       <ul className="na">
+
+
        {/* <button className="btn btn-primary" onClick={() => goLanding()}> Home Page </button>
        <button  className="btn btn-primary" onClick={() =>showAllBooks()}>Album Books</button> */}
       <button> 
@@ -67,7 +69,8 @@ const Navbar = ({ user, changeForm, logout, goLanding, showAllBooks }) => {
                 <div className="nav-link">Album Books</div>
               </li> </button>
 
-          {// if the user is not authenticated
+          {
+            // if the user is not authenticated
           !user && (
             <React.Fragment>
               <button> 
