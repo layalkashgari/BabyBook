@@ -57,11 +57,14 @@ const Navbar = ({ user, changeForm, logout, goLanding, showAllBooks }) => {
                 className="nav-item active"
                 onClick={() => changeForm("home")}
               >
-                <div className="nav-link">Home</div>
+              <Navbar bg="light" expand="lg">
+                <div className="nav-link" >Home</div></Navbar>
               </li> </button>
 
               <h1> </h1>
               <button> 
+
+
                  <li
                 
                 onClick={() => changeForm("AlbumBooks")}

@@ -10,7 +10,7 @@ body {
 
 .app {
     background: linear-gradient(180deg, #C5E0FF 0%, rgba(255, 239, 157, 0) 99.45%);
-    height: 100vh;
+    /* height: 100vh; */
     width: 100vw;
     position: absolute;
   }
@@ -134,7 +134,7 @@ body {
   .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    
     justify-content: space-around;
   }
   
@@ -207,19 +207,38 @@ body {
   
   .loading {
     width: 200px;
+    height: auto;
+  }
+
+
+  .na { 
+
+    width: 200px;
     height: 200px;
   }
+
+  
+
+  
+
   
   .loading .background {
     border-radius: 50%;
     background: #6762a6;
     border: 3px solid #c9c3e6;
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25); */
     width: 200px;  
     height: 200px;
     box-sizing: border-box;
+
     animation: pulse-colors 2s infinite alternate linear;
   }
+
+  * {
+    box-sizing: border-box;
+    margin: auto;
+}
+
   
   .loading i {
     margin: 25px 5px 5px 55px;
@@ -333,3 +352,43 @@ body {
       text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.55);
     }
   }
+
+/* for rendering all books  */
+
+
+.tile {
+  width: auto; 
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 5px;
+  justify-content: space-between;
+  /* background-color:  rgba(15, 1, 32, 0); */
+  cursor: pointer;
+  background-image: url("https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/q77/s720x720/375619_481067171973365_588962046_n.jpg");
+
+}
+
+.tile > img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.tile > h2 {
+  margin: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
+  color: rgb(53, 13, 51);
+}
+
+.container{
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}

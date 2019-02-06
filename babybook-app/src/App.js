@@ -35,6 +35,20 @@ class App extends Component {
       // name: '',
       // email: '', 
       // password: ''
+      motherName: '',
+      fatherName: '',
+      imageurl: '',
+      page_id: '1',
+      babyName: '',
+      choseIt: '',
+      month1: '',
+      month2: '',
+      day: '',
+      date: '',
+      time: '',
+      hospitalName: '',
+      bookName: '',
+      currentBook: null
     }
   }
   // ghadeer's auth 
@@ -45,16 +59,16 @@ class App extends Component {
     }
   }
 
-  checkToken(){ 
-    const token = getToken(); 
-    if (token) { 
+  checkToken() {
+    const token = getToken();
+    if (token) {
       this.setState({ token })
     }
-  } 
+  }
 
   componentDidMount() {
     this.checkForUser();
-    this.checkToken(); 
+    this.checkToken();
   }
   // to change the sign in and singup forms 
 
@@ -154,7 +168,7 @@ class App extends Component {
     console.log('auth token ', localStorage.getItem('authToken'));
     console.log('user token', getToken());
 
-    console.log("this the user id that I want to be linked with the book ", userId , "and token is" , userToken )
+    console.log("this the user id that I want to be linked with the book ", userId, "and token is", userToken)
     console.log(" clicked on create your own book - go to the book component");
     this.setState({
       showBook: !this.state.showBook,
@@ -168,7 +182,7 @@ class App extends Component {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ user_id: userId, name: "this is a test from the client book", auth_token: getToken() })
+      body: JSON.stringify({ user_id: userId, name: "BookName needs to be set", auth_token: getToken() })
       //  body: JSON.stringify(show) this is removed because i dont want to send anything - and the parameter is also deleted because im not sendind any data e.x. book name 
 
     })
@@ -178,7 +192,8 @@ class App extends Component {
         console.log(data);
         const bookData = this.state.bookData.concat([data]);
         this.setState({
-          bookData: bookData
+          bookData: bookData,
+          currentBook: data
         })
       })
       .catch(error => {
@@ -256,6 +271,17 @@ class App extends Component {
   }
 
 
+   showOneBook = (currentBook) => {
+
+    console.log(currentBook) 
+    //  this.setState({ showBook: true })
+    //  this.setState({ currentBook})
+
+    this.setState({
+      showBook: true,
+      form: 'showBook'
+    })
+   }
   render() {
     return (
       <div className="app">
@@ -290,16 +316,20 @@ class App extends Component {
 
         {this.state.form === 'home' ? <Landing handleCreateButton={this.handleCreateButton.bind(this)} /> : ''}
 
-        {this.state.form === 'AlbumBooks' ? <AllBooks /> : false}
+        {this.state.form === 'AlbumBooks' ? <AllBooks  showOneBook={this.showOneBook} /> : false}
+
+        {/* {this.state.form === 'showBook' ? <Book currentBook={this.state.currentBook} user={this.state.user} handleNextButton={this.handleNextButton.bind(this)}/> : false} */}
 
         {/* {this.state.home ? <Landing handleCreateButton={this.handleCreateButton.bind(this)} /> : false} */}
 
 
 
-        {this.state.showBook ? <Book handleNextButton={this.handleNextButton.bind(this)} /> : false}
+        {this.state.showBook ? <Book currentBook={this.state.currentBook} user={this.state.user} handleNextButton={this.handleNextButton.bind(this)}  /> : false}
 
         {/* {chech for active page then render the landing page } */}
+        
       </div>
+
     );
   }
 }

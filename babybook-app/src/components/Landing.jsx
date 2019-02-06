@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Book from "./Book"; 
 import Navbar from"./Navbar"; 
+import Upload from"./Upload"; 
+
 
 
 class Landing extends Component {
@@ -14,11 +16,20 @@ class Landing extends Component {
   render() {
     return (
       <div className= "landing">
-        <h1>This is the landing </h1>
+     
+<p> Photo books
+In just 3 steps you can save your digital photos and tell your baby's stories in a photo book!Create your photo book by adding your digital photos. 
+
+ </p>
+
+
+
 
         <div> 
             <button onClick={this.props.handleCreateButton}> Create Your Own Book </button>
         </div>
+
+        
 
 
      

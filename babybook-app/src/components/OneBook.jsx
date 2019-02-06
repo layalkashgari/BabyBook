@@ -7,7 +7,7 @@ import { getUser, logout, getToken } from "../services/authService";
 const API_URL = 'http://localhost:3000'
 
 
-class AllBooks extends Component {
+class OneBook extends Component {
   constructor() {
     super()
     this.state = {
@@ -15,14 +15,9 @@ class AllBooks extends Component {
     }
   }
 
-  // did mount then render, after the state updates it rerenders again 
-
-
-  fetchAllBooks() {
-    console.log("IN FETCH")
-    let userId = getUser().id
-    const url = API_URL + "/books?auth_token=" + getToken(); // added ?auth_token 
-    console.log(getToken());
+fetchOneBook() { 
+    console.log('in feetchhh')
+    const url = API_URL + "/books?auth_token=/:id" + getToken();
     fetch(url, {
       method: 'GET',
       headers: {
@@ -38,51 +33,21 @@ class AllBooks extends Component {
           books: data
         })
 
-  
       })
       .catch(error => {
         console.log(error);
       })
   }
 
+
   componentDidMount() {
     this.fetchAllBooks();
-  }
-
-  showOneBook(){ 
-
-    
-  }
-
-  renderBooks(allbooks) {
-    // use map to return an array of components, where each component has data about the book
-
-    // map through the state "books" 
-    // and make a tile for each BOOK 
-
-    return allbooks.map((book) => {
-      return (
-        <div key={book.id} onClick={() => this.props.showOneBook(book) } >
-          {/*  react needs an id  */}
-          <p>{book.name}</p>
-        </div>
-        // <AllBooks  /> // not sure which component
-      )
-    })
-  }
-
-
-  // showBook() { 
-
-  //   this.setState
-  // }
-
-
+  } 
 
   render() {
     return (
       <div>
-        <h1> Your Baby Books: </h1>
+        <h1> ajeeb al name 7g al book  </h1>
         {/* <div className="tile" >
         {this.renderBooks(this.state.books)} 
         </div> */}
@@ -101,4 +66,6 @@ class AllBooks extends Component {
   }
 }
 
-export default AllBooks;
+
+
+  export default OneBook;
